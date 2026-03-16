@@ -2,22 +2,20 @@
 <html lang="it">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Password App</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
-        <h1>Password App</h1>
-        <p>Inserisci il tuo nome per ottenere una password sicura</p>
-
-        <form action="/encode" method="POST">
-            <input type="text" name="name" placeholder="Nome" required>
+        <h1>Password App 🔒</h1>
+        
+        <form method="POST" action="/encode">
+            <input type="text" name="name" placeholder="Inserisci il tuo nome" required>
             <button type="submit">Codifica</button>
         </form>
 
-        <form action="/decode" method="POST">
-            <input type="text" name="password" placeholder="Password" required>
+        <form method="POST" action="/decode">
+            <input type="text" name="password" placeholder="Inserisci la password" required>
             <button type="submit">Decodifica</button>
         </form>
 

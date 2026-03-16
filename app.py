@@ -2,15 +2,14 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-# funzione semplice di codifica / decodifica
+# Funzione semplice per codificare il nome in simboli
 def encode_name(name):
-    # trasforma ogni carattere in un simbolo casuale
     symbols = ['%', '$', '&', '/', '(', ')', '#', '@', '!']
     encoded = ''.join(symbols[ord(c) % len(symbols)] for c in name)
     return encoded
 
+# Funzione di decodifica (solo dimostrativa)
 def decode_password(pw):
-    # decodifica semplificata solo per demo
     return "Decodifica non reale"
 
 @app.route('/')
@@ -30,4 +29,4 @@ def decode():
     return render_template('index.html', result=f"Nome originale: {decoded}")
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host="0.0.0.0")
