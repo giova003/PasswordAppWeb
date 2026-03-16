@@ -2,7 +2,7 @@ from flask import Flask, render_template_string, request
 
 app = Flask(__name__)
 
-# Dizionario temporaneo per codifica/decodifica
+# Dizionario temporaneo per Crea codice/Scopri codice
 password_map = {}
 
 HTML_TEMPLATE = """
@@ -47,8 +47,8 @@ HTML_TEMPLATE = """
             <input type="text" name="text_input" placeholder="Metti quello che vuoi codificare" required>
             <br>
             <select name="action">
-                <option value="codifica">Codifica</option>
-                <option value="decodifica">Decodifica</option>
+                <option value="Crea codice">Crea codice</option>
+                <option value="Scopri codice">Scopri codice</option>
             </select>
             <br>
             <button type="submit">Genera</button>
@@ -79,11 +79,11 @@ def home():
         text = request.form.get("text_input", "").strip()
         action = request.form.get("action")
 
-        if action == "codifica" and text:
+        if action == "Crea codice" and text:
             encoded = "".join([chr((ord(c)+5)%256) for c in text])
             password_map[encoded] = text
             result = encoded
-        elif action == "decodifica" and text:
+        elif action == "Scopri codice" and text:
             decoded = password_map.get(text, "Non trovato")
             result = decoded
 
