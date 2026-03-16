@@ -1,40 +1,33 @@
-from flask import Flask, request, render_template_string
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-import string, random
-random.seed(42)
-chars = string.ascii_letters + string.digits + string.punctuation + " "
-shuffled = list(chars)
-random.shuffle(shuffled)
-mappa = dict(zip(chars, shuffled))
-mappa_inv = dict(zip(shuffled, chars))
+# funzione semplice di codifica / decodifica
+def encode_name(name):
+    # trasforma ogni carattere in un simbolo casuale
+    symbols = ['%', '$', '&', '/', '(', ')', '#', '@', '!']
+    encoded = ''.join(symbols[ord(c) % len(symbols)] for c in name)
+    return encoded
 
-HTML = """
-<!doctype html>
-<title>Password Encoder</title>
-<h2>Password Encoder</h2>
-<form method="POST">
-  <input name="text" placeholder="Inserisci nome o codice" size="40" required>
-  <button name="action" value="encode">Codifica</button>
-  <button name="action" value="decode">Decodifica</button>
-</form>
-<p>Risultato: {{result}}</p>
-"""
+def decode_password(pw):
+    # decodifica semplificata solo per demo
+    return "Decodifica non reale"
 
-@app.route("/", methods=["GET", "POST"])
-def index():
-    result = ""
-    if request.method == "POST":
-        text = request.form["text"]
-        action = request.form["action"]
-        if action == "encode":
-            result = ''.join(mappa.get(c, c) for c in text)
-        else:
-            result = ''.join(mappa_inv.get(c, c) for c in text)
-    return render_template_string(HTML, result=result)
+@app.route('/')
+def home():
+    return render_template('index.html', result="")
+
+@app.route('/encode', methods=['POST'])
+def encode():
+    name = request.form['name']
+    encoded = encode_name(name)
+    return render_template('index.html', result=f"Password: {encoded}")
+
+@app.route('/decode', methods=['POST'])
+def decode():
+    password = request.form['password']
+    decoded = decode_password(password)
+    return render_template('index.html', result=f"Nome originale: {decoded}")
 
 if __name__ == "__main__":
-    import os
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+    app.run(debug=True)
