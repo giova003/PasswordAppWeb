@@ -1,38 +1,29 @@
 from flask import Flask, render_template, request
-import os
 
 app = Flask(__name__)
 
-mapping = {
-'a':'@','b':'#','c':'$','d':'%','e':'^','f':'&','g':'*',
-'h':'(','i':')','l':'-','m':'+','n':'=','o':'!','p':'?',
-'q':'<','r':'>','s':':','t':';','u':'~','v':'`','z':'_'
-}
+# Dizionario per memorizzare codifica/decodifica temporanea
+password_map = {}
 
-inverse_mapping = {v:k for k,v in mapping.items()}
-
-def encode(text):
-    return ''.join(mapping.get(c.lower(), c) for c in text)
-
-def decode(text):
-    return ''.join(inverse_mapping.get(c, c) for c in text)
-
-@app.route("/", methods=["GET","POST"])
-def index():
+@app.route("/", methods=["GET", "POST"])
+def home():
     result = ""
-
     if request.method == "POST":
-        text = request.form["text"]
-
-        if any(c in mapping for c in text.lower()):
-            result = encode(text)
-        else:
-            result = decode(text)
-
+        text = request.form.get("text_input", "").strip()
+        action = request.form.get("action")
+        
+        if action == "codifica" and text:
+            # Genera una codifica semplice basata su simboli
+            encoded = "".join([chr((ord(c)+5)%256) for c in text])
+            password_map[encoded] = text
+            result = f"{text} = {encoded}"
+        elif action == "decodifica" and text:
+            decoded = password_map.get(text, "Non trovato")
+            result = f"{text} = {decoded}"
+            
     return render_template("index.html", result=result)
 
-import os
-
 if __name__ == "__main__":
+    import os
     port = int(os.environ.get("PORT", 5000))
     app.run(host="0.0.0.0", port=port)
