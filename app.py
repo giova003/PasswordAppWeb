@@ -2,7 +2,7 @@ from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
-# Dizionario per memorizzare codifica/decodifica temporanea
+# Dizionario temporaneo per codifica/decodifica
 password_map = {}
 
 @app.route("/", methods=["GET", "POST"])
@@ -11,16 +11,15 @@ def home():
     if request.method == "POST":
         text = request.form.get("text_input", "").strip()
         action = request.form.get("action")
-        
+
         if action == "codifica" and text:
-            # Genera una codifica semplice basata su simboli
             encoded = "".join([chr((ord(c)+5)%256) for c in text])
             password_map[encoded] = text
             result = f"{text} = {encoded}"
         elif action == "decodifica" and text:
             decoded = password_map.get(text, "Non trovato")
             result = f"{text} = {decoded}"
-            
+
     return render_template("index.html", result=result)
 
 if __name__ == "__main__":
