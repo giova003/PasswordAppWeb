@@ -7,18 +7,12 @@
 </head>
 <body>
     <div class="container">
-        <h1>Password App 🔒</h1>
-        
-        <form method="POST" action="/encode">
-            <input type="text" name="name" placeholder="Inserisci il tuo nome" required>
-            <button type="submit">Codifica</button>
+        <h1>Password Codificata</h1>
+        <form method="POST">
+            <input type="text" name="text" placeholder="Metti quello che vuoi codificare" required>
+            <br>
+            <button type="submit">Genera / Decodifica</button>
         </form>
-
-        <form method="POST" action="/decode">
-            <input type="text" name="password" placeholder="Inserisci la password" required>
-            <button type="submit">Decodifica</button>
-        </form>
-
         {% if result %}
             <div class="result">{{ result }}</div>
         {% endif %}
