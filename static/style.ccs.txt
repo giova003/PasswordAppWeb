@@ -9,26 +9,40 @@ body {
 }
 
 .container {
-    background: rgba(255, 255, 255, 0.9);
-    padding: 40px;
-    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 50px;
+    border-radius: 20px;
     text-align: center;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+    width: 400px;
+    transition: transform 0.3s ease;
+}
+
+.container:hover {
+    transform: scale(1.02); /* effetto leggero quando ci passi sopra */
 }
 
 h1 {
     font-size: 3em;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     color: #333;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
 }
 
 input {
     padding: 15px;
     font-size: 1.2em;
     margin: 10px 0;
-    width: 80%;
+    width: 90%;
     border-radius: 10px;
     border: 1px solid #ccc;
+    transition: border 0.3s ease, box-shadow 0.3s ease;
+}
+
+input:focus {
+    border-color: #2575fc;
+    box-shadow: 0 0 10px rgba(37,117,252,0.5);
+    outline: none;
 }
 
 button {
@@ -37,7 +51,6 @@ button {
     margin: 10px 0;
     border: none;
     border-radius: 10px;
-    background: #6a11cb;
     background: linear-gradient(to right, #2575fc, #6a11cb);
     color: white;
     cursor: pointer;
@@ -45,11 +58,18 @@ button {
 }
 
 button:hover {
-    opacity: 0.8;
+    opacity: 0.85;
+    transform: translateY(-2px);
 }
 
 .result {
     margin-top: 20px;
     font-size: 1.5em;
     color: #222;
+    word-break: break-word;
+    transition: color 0.3s ease;
+}
+
+.result:hover {
+    color: #2575fc;
 }
